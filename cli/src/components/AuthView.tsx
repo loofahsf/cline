@@ -216,7 +216,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ controller, onComplete, onEr
 			items.push({ label: "Import from OpenCode", value: "import_opencode" })
 		}
 
-		items.push({ label: "Configure API provider (Anthropic, Gemini, OpenAI, MiniMax)", value: "configure_byo" })
+		items.push({ label: "Configure API provider (Anthropic, Gemini, OpenAI, MiniMax)", value: "configure_provider" })
 		items.push({ label: "Exit", value: "exit" })
 
 		return items
@@ -350,7 +350,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ controller, onComplete, onEr
 			} else if (value === "openai_codex_auth") {
 				setStep("openai_codex_auth")
 				startOpenAiCodexAuth()
-			} else if (value === "configure_byo") {
+			} else if (value === "configure_provider") {
 				setStep("provider")
 			} else if (value === "import_codex") {
 				setImportSource("codex")

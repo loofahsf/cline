@@ -1,6 +1,6 @@
 /**
  * Model picker component for model selection
- * Supports static model lists for the supported providers
+ * Supports static model lists for Anthropic, Gemini, OpenAI-compatible, and MiniMax providers
  */
 
 import React, { useMemo } from "react"
