@@ -32,7 +32,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 					const errorMessage = clineError?._error?.message || clineError?.message || rawApiError
 					const requestId = clineError?._error?.request_id
 					const providerId = clineError?.providerId || clineError?._error?.providerId
-					const isClineProvider = providerId === "cline"
+					const isLegacyClineProvider = providerId === "cline"
 					const errorCode = clineError?._error?.code
 
 					if (clineError?.isErrorType(ClineErrorType.Balance)) {
@@ -70,7 +70,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 						)
 					}
 
-					if (clineError?.isErrorType(ClineErrorType.Auth) && isClineProvider) {
+					if (clineError?.isErrorType(ClineErrorType.Auth) && isLegacyClineProvider) {
 						return (
 							<div className="flex flex-col gap-3">
 								<div className="flex items-center justify-center rounded border border-neutral-500/30 bg-vscode-editor-background p-6 text-center text-vscode-foreground">
