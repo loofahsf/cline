@@ -1,4 +1,4 @@
-import { SUPPORTED_API_PROVIDERS } from "@shared/api"
+import { isSupportedApiProvider } from "@shared/api"
 import { StringRequest } from "@shared/proto/cline/common"
 import PROVIDERS from "@shared/providers/providers.json"
 import { Mode } from "@shared/storage/types"
@@ -112,11 +112,7 @@ const ApiOptions = ({
 		// Filter by remote config if remoteConfiguredProviders is set
 		const remoteProviders: string[] = remoteConfigSettings?.remoteConfiguredProviders || []
 		if (remoteProviders.length > 0) {
-			providers = providers.filter(
-				(option) =>
-					SUPPORTED_API_PROVIDERS.includes(option.value as (typeof SUPPORTED_API_PROVIDERS)[number]) &&
-					remoteProviders.includes(option.value),
-			)
+			providers = providers.filter((option) => isSupportedApiProvider(option.value) && remoteProviders.includes(option.value))
 		}
 
 		return providers

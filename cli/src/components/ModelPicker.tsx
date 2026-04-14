@@ -53,22 +53,12 @@ export const ModelPicker: React.FC<ModelPickerProps> = (props) => {
 	const { provider, onChange, onSubmit, isActive = true } = props
 	const modelList = useMemo(() => getModelList(provider), [provider])
 
-	const supportsCustomModel = false
-
 	const items: SearchableListItem[] = useMemo(() => {
-		const list = modelList.map((modelId) => ({
+		return modelList.map((modelId) => ({
 			id: modelId,
 			label: modelId,
 		}))
-		// Add "Custom" option at the end for providers that support it
-		if (supportsCustomModel) {
-			list.push({
-				id: CUSTOM_MODEL_ID,
-				label: "Custom (ARN / Inference Profile)",
-			})
-		}
-		return list
-	}, [modelList, supportsCustomModel])
+	}, [modelList])
 
 	// For providers without a model picker, render nothing
 	if (!hasModelPicker(provider)) {

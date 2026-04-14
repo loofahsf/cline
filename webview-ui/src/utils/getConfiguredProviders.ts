@@ -1,4 +1,4 @@
-import { type ApiConfiguration, type ApiProvider, SUPPORTED_API_PROVIDERS } from "@shared/api"
+import { type ApiConfiguration, type ApiProvider, isSupportedApiProvider } from "@shared/api"
 import PROVIDERS from "@shared/providers/providers.json"
 import type { RemoteConfigFields } from "@shared/storage/state-keys"
 
@@ -11,9 +11,7 @@ export function getConfiguredProviders(
 	apiConfiguration: ApiConfiguration | undefined,
 ): ApiProvider[] {
 	if (remoteConfig?.remoteConfiguredProviders?.length) {
-		return remoteConfig.remoteConfiguredProviders.filter((provider): provider is ApiProvider =>
-			SUPPORTED_API_PROVIDERS.includes(provider as (typeof SUPPORTED_API_PROVIDERS)[number]),
-		)
+		return remoteConfig.remoteConfiguredProviders.filter(isSupportedApiProvider) as ApiProvider[]
 	}
 
 	const configured: ApiProvider[] = []

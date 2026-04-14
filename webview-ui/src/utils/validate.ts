@@ -2,6 +2,19 @@ import { ApiConfiguration, ModelInfo } from "@shared/api"
 import { Mode } from "@shared/storage/types"
 import { getModeSpecificFields } from "@/components/settings/utils/providerUtils"
 
+function isValidOpenAiConfig(apiConfiguration: ApiConfiguration, openAiModelId: string | undefined): boolean {
+	if (!apiConfiguration.openAiBaseUrl) {
+		return false
+	}
+	if (!apiConfiguration.openAiApiKey && !apiConfiguration.azureIdentity) {
+		return false
+	}
+	if (!openAiModelId) {
+		return false
+	}
+	return true
+}
+
 export function validateApiConfiguration(currentMode: Mode, apiConfiguration?: ApiConfiguration): string | undefined {
 	if (apiConfiguration) {
 		const {
@@ -18,7 +31,7 @@ export function validateApiConfiguration(currentMode: Mode, apiConfiguration?: A
 				return "You must provide a valid API key or choose a different provider."
 			}
 		} else if (apiProvider === "openai") {
-			if (!apiConfiguration.openAiBaseUrl || (!apiConfiguration.openAiApiKey && !apiConfiguration.azureIdentity) || !openAiModelId) {
+			if (!isValidOpenAiConfig(apiConfiguration, openAiModelId)) {
 				return "You must provide a valid base URL, API key, and model ID."
 			}
 		} else if (apiProvider === "minimax") {
