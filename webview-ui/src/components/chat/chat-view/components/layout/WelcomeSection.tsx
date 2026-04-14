@@ -184,7 +184,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 					break
 
 				case BannerActionType.SetModel: {
-					navigateToSettingsModelPicker({ targetSection: "api-config", initialModelTab: action.tab || "recommended" })
+					navigateToSettingsModelPicker({ targetSection: "api-config" })
 					break
 				}
 

@@ -216,7 +216,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ controller, onComplete, onEr
 			items.push({ label: "Import from OpenCode", value: "import_opencode" })
 		}
 
-		items.push({ label: "Configure supported API provider", value: "configure_byo" })
+		items.push({ label: "Configure API provider (Anthropic, Gemini, OpenAI, MiniMax)", value: "configure_byo" })
 		items.push({ label: "Exit", value: "exit" })
 
 		return items
