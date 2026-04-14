@@ -71,25 +71,22 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 					}
 
 					if (clineError?.isErrorType(ClineErrorType.Auth) && isClineProvider) {
-						return !clineUser ? (
-							// User is using Cline provider and is not logged in
+						return (
 							<div className="flex flex-col gap-3">
 								<div className="flex items-center justify-center rounded border border-neutral-500/30 bg-vscode-editor-background p-6 text-center text-vscode-foreground">
-									Whoops looks like you're logged out – click below to sign in
+									The legacy Cline provider is no longer supported. Switch to Anthropic, Gemini, OpenAI-compatible,
+									or MiniMax in settings.
 								</div>
-								<Button className="w-full" disabled={isLoginLoading} onClick={handleSignIn}>
-									Sign in to Cline
-									{isLoginLoading && (
-										<span className="ml-1 animate-spin">
-											<span className="codicon codicon-refresh" />
-										</span>
-									)}
-								</Button>
-							</div>
-						) : (
-							// Don't show sign in button after the user has logged in, just ask them to retry
-							<div className="mt-4">
-								<span className="text-description">(Click "Retry" below)</span>
+								{!clineUser && (
+									<Button className="w-full" disabled={isLoginLoading} onClick={handleSignIn}>
+										Open API Settings
+										{isLoginLoading && (
+											<span className="ml-1 animate-spin">
+												<span className="codicon codicon-refresh" />
+											</span>
+										)}
+									</Button>
+								)}
 							</div>
 						)
 					}

@@ -206,10 +206,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ controller, onComplete, onEr
 
 	// Main menu items - conditionally include import options
 	const mainMenuItems: SelectItem[] = useMemo(() => {
-		const items: SelectItem[] = [{ label: "Sign in with Cline", value: "cline_auth" }]
-
-		// Add OpenAI Codex option for ChatGPT subscribers
-		items.push({ label: "Sign in with ChatGPT Subscription", value: "openai_codex_auth" })
+		const items: SelectItem[] = []
 
 		// Add import options if detected
 		if (importSources.codex) {
@@ -219,7 +216,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ controller, onComplete, onEr
 			items.push({ label: "Import from OpenCode", value: "import_opencode" })
 		}
 
-		items.push({ label: "Use your own API key", value: "configure_byo" })
+		items.push({ label: "Configure supported API provider", value: "configure_byo" })
 		items.push({ label: "Exit", value: "exit" })
 
 		return items

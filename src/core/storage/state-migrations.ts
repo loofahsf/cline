@@ -568,70 +568,20 @@ export async function migrateWelcomeViewCompleted(context: vscode.ExtensionConte
 
 			// Fetch API keys directly from secrets
 			const apiKey = await context.secrets.get("apiKey")
-			const openRouterApiKey = await context.secrets.get("openRouterApiKey")
-			const clineAccountId = await context.secrets.get("clineAccountId")
 			const openAiApiKey = await context.secrets.get("openAiApiKey")
-			const ollamaApiKey = await context.secrets.get("ollamaApiKey")
-			const liteLlmApiKey = await context.secrets.get("liteLlmApiKey")
 			const geminiApiKey = await context.secrets.get("geminiApiKey")
-			const openAiNativeApiKey = await context.secrets.get("openAiNativeApiKey")
-			const deepSeekApiKey = await context.secrets.get("deepSeekApiKey")
-			const requestyApiKey = await context.secrets.get("requestyApiKey")
-			const togetherApiKey = await context.secrets.get("togetherApiKey")
-			const qwenApiKey = await context.secrets.get("qwenApiKey")
-			const doubaoApiKey = await context.secrets.get("doubaoApiKey")
-			const mistralApiKey = await context.secrets.get("mistralApiKey")
-			const asksageApiKey = await context.secrets.get("asksageApiKey")
-			const xaiApiKey = await context.secrets.get("xaiApiKey")
-			const sambanovaApiKey = await context.secrets.get("sambanovaApiKey")
-			const sapAiCoreClientId = await context.secrets.get("sapAiCoreClientId")
-			const difyApiKey = await context.secrets.get("difyApiKey")
-			const hicapApiKey = await context.secrets.get("hicapApiKey")
-			// OpenAI Codex OAuth credentials
-			const openAiCodexCredentials = await context.secrets.get("openai-codex-oauth-credentials")
+			const minimaxApiKey = await context.secrets.get("minimaxApiKey")
 
 			// Fetch configuration values from global state
-			const awsRegion = context.globalState.get("awsRegion")
-			const vertexProjectId = context.globalState.get("vertexProjectId")
-			const planModeOllamaModelId = context.globalState.get("planModeOllamaModelId")
-			const planModeLmStudioModelId = context.globalState.get("planModeLmStudioModelId")
-			const actModeOllamaModelId = context.globalState.get("actModeOllamaModelId")
-			const actModeLmStudioModelId = context.globalState.get("actModeLmStudioModelId")
-			const planModeVsCodeLmModelSelector = context.globalState.get("planModeVsCodeLmModelSelector")
-			const actModeVsCodeLmModelSelector = context.globalState.get("actModeVsCodeLmModelSelector")
+			const openAiBaseUrl = context.globalState.get("openAiBaseUrl")
 
 			// This is the original logic used for checking if the welcome view should be shown
 			// It was located in the ExtensionStateContextProvider
 			const hasKey = [
 				apiKey,
-				openRouterApiKey,
-				awsRegion,
-				vertexProjectId,
-				openAiApiKey,
-				ollamaApiKey,
-				planModeOllamaModelId,
-				planModeLmStudioModelId,
-				actModeOllamaModelId,
-				actModeLmStudioModelId,
-				liteLlmApiKey,
 				geminiApiKey,
-				openAiNativeApiKey,
-				deepSeekApiKey,
-				requestyApiKey,
-				togetherApiKey,
-				qwenApiKey,
-				doubaoApiKey,
-				mistralApiKey,
-				planModeVsCodeLmModelSelector,
-				actModeVsCodeLmModelSelector,
-				clineAccountId,
-				asksageApiKey,
-				xaiApiKey,
-				sambanovaApiKey,
-				sapAiCoreClientId,
-				difyApiKey,
-				hicapApiKey,
-				openAiCodexCredentials,
+				minimaxApiKey,
+				openAiApiKey && openAiBaseUrl ? openAiApiKey : undefined,
 			].some((key) => key !== undefined)
 
 			// Set welcomeViewCompleted based on whether user has keys

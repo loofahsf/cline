@@ -14,7 +14,7 @@ import { SuggestedTasks } from "@/components/welcome/SuggestedTasks"
 import CreateWorktreeModal from "@/components/worktrees/CreateWorktreeModal"
 import { useClineAuth } from "@/context/ClineAuthContext"
 import { useExtensionState } from "@/context/ExtensionStateContext"
-import { AccountServiceClient, StateServiceClient, UiServiceClient, WorktreeServiceClient } from "@/services/grpc-client"
+import { StateServiceClient, UiServiceClient, WorktreeServiceClient } from "@/services/grpc-client"
 import { convertBannerData } from "@/utils/bannerUtils"
 import { getCurrentPlatform } from "@/utils/platformUtils"
 import { WelcomeSectionProps } from "../../types/chatTypes"
@@ -60,7 +60,6 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 
 	const { clineUser } = useClineAuth()
 	const {
-		openRouterModels,
 		navigateToSettings,
 		navigateToSettingsModelPicker,
 		navigateToWorktrees,
@@ -185,22 +184,12 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 					break
 
 				case BannerActionType.SetModel: {
-					const modelId = action.arg || "anthropic/claude-sonnet-4.5"
-					const initialModelTab = action.tab || "recommended"
-					handleFieldsChange({
-						planModeOpenRouterModelId: modelId,
-						actModeOpenRouterModelId: modelId,
-						planModeOpenRouterModelInfo: openRouterModels[modelId],
-						actModeOpenRouterModelInfo: openRouterModels[modelId],
-						planModeApiProvider: "cline",
-						actModeApiProvider: "cline",
-					})
-					navigateToSettingsModelPicker({ targetSection: "api-config", initialModelTab })
+					navigateToSettingsModelPicker({ targetSection: "api-config", initialModelTab: action.tab || "recommended" })
 					break
 				}
 
 				case BannerActionType.ShowAccount:
-					AccountServiceClient.accountLoginClicked({}).catch((err) => console.error("Failed to get login URL:", err))
+					navigateToSettings("api-config")
 					break
 
 				case BannerActionType.ShowApiSettings:
@@ -228,7 +217,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 					console.warn("Unknown banner action:", action.action)
 			}
 		},
-		[handleFieldsChange, openRouterModels, navigateToSettings, navigateToSettingsModelPicker],
+		[handleFieldsChange, navigateToSettings, navigateToSettingsModelPicker],
 	)
 
 	/**

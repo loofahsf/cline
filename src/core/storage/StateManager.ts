@@ -1,4 +1,4 @@
-import type { ApiConfiguration, ModelInfo } from "@shared/api"
+import { coerceSupportedApiProvider, type ApiConfiguration, ModelInfo } from "@shared/api"
 import {
 	ApiHandlerSettingsKeys,
 	type GlobalState,
@@ -923,10 +923,15 @@ export class StateManager {
 		// Build API handler settings object with task override support
 		const settings = Object.fromEntries(ApiHandlerSettingsKeys.map((key) => [key, this.getSettingWithOverride(key)]))
 
-		return {
+		const apiConfiguration = {
 			...secrets,
 			...settings,
-		} satisfies ApiConfiguration
+		} as ApiConfiguration
+
+		apiConfiguration.planModeApiProvider = coerceSupportedApiProvider(apiConfiguration.planModeApiProvider)
+		apiConfiguration.actModeApiProvider = coerceSupportedApiProvider(apiConfiguration.actModeApiProvider)
+
+		return apiConfiguration
 	}
 
 	/**
