@@ -1,5 +1,5 @@
-import { StringRequest } from "@shared/proto/cline/common"
 import { SUPPORTED_API_PROVIDERS } from "@shared/api"
+import { StringRequest } from "@shared/proto/cline/common"
 import PROVIDERS from "@shared/providers/providers.json"
 import { Mode } from "@shared/storage/types"
 import { VSCodeTextField } from "@vscode/webview-ui-toolkit/react"

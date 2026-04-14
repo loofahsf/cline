@@ -49,8 +49,8 @@ interface ModelPickerProps {
 	isActive?: boolean
 }
 
-export const ModelPicker: React.FC<ModelPickerProps> = ({ provider, controller: _controller, onChange, onSubmit, isActive = true }) => {
-
+export const ModelPicker: React.FC<ModelPickerProps> = (props) => {
+	const { provider, onChange, onSubmit, isActive = true } = props
 	const modelList = useMemo(() => getModelList(provider), [provider])
 
 	const supportsCustomModel = false

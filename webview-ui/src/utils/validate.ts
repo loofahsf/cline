@@ -32,7 +32,7 @@ export function validateApiConfiguration(currentMode: Mode, apiConfiguration?: A
 				}
 				break
 			default:
-				return "Only Anthropic, Gemini, OpenAI-compatible, and MiniMax are supported."
+				return "Only Anthropic, Gemini, OpenAI Compatible, and MiniMax are supported."
 		}
 	}
 	return undefined

@@ -923,15 +923,12 @@ export class StateManager {
 		// Build API handler settings object with task override support
 		const settings = Object.fromEntries(ApiHandlerSettingsKeys.map((key) => [key, this.getSettingWithOverride(key)]))
 
-		const apiConfiguration = {
+		return {
 			...secrets,
 			...settings,
+			planModeApiProvider: coerceSupportedApiProvider((settings as Partial<ApiConfiguration>).planModeApiProvider),
+			actModeApiProvider: coerceSupportedApiProvider((settings as Partial<ApiConfiguration>).actModeApiProvider),
 		} as ApiConfiguration
-
-		apiConfiguration.planModeApiProvider = coerceSupportedApiProvider(apiConfiguration.planModeApiProvider)
-		apiConfiguration.actModeApiProvider = coerceSupportedApiProvider(apiConfiguration.actModeApiProvider)
-
-		return apiConfiguration
 	}
 
 	/**
