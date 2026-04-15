@@ -45,7 +45,18 @@ export type ApiProvider =
 	| "nousResearch"
 	| "wandb"
 
-export const DEFAULT_API_PROVIDER = "openrouter" as ApiProvider
+export const SUPPORTED_API_PROVIDERS = ["anthropic", "gemini", "openai", "minimax"] as const satisfies readonly ApiProvider[]
+export type SupportedApiProvider = (typeof SUPPORTED_API_PROVIDERS)[number]
+
+export const DEFAULT_API_PROVIDER = "anthropic" as const satisfies SupportedApiProvider
+
+export function isSupportedApiProvider(provider: string | undefined): provider is SupportedApiProvider {
+	return !!provider && SUPPORTED_API_PROVIDERS.includes(provider as SupportedApiProvider)
+}
+
+export function coerceSupportedApiProvider(provider: ApiProvider | string | undefined): SupportedApiProvider {
+	return isSupportedApiProvider(provider) ? provider : DEFAULT_API_PROVIDER
+}
 
 export interface ApiHandlerOptions extends Partial<ApiHandlerSettings> {
 	ulid?: string // Used to identify the task in API requests

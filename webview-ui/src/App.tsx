@@ -1,15 +1,12 @@
 import type { Boolean, EmptyRequest } from "@shared/proto/cline/common"
 import { useCallback, useEffect, useState } from "react"
-import AccountView from "./components/account/AccountView"
 import ChatView from "./components/chat/ChatView"
 import ClineKanbanLaunchModal, { CLINE_KANBAN_MODAL_DISMISS_ID } from "./components/common/ClineKanbanLaunchModal"
 import HistoryView from "./components/history/HistoryView"
 import McpView from "./components/mcp/configuration/McpConfigurationView"
-import OnboardingView from "./components/onboarding/OnboardingView"
 import SettingsView from "./components/settings/SettingsView"
 import WelcomeView from "./components/welcome/WelcomeView"
 import WorktreesView from "./components/worktrees/WorktreesView"
-import { useClineAuth } from "./context/ClineAuthContext"
 import { useExtensionState } from "./context/ExtensionStateContext"
 import { Providers } from "./Providers"
 import { StateServiceClient, UiServiceClient } from "./services/grpc-client"
@@ -25,24 +22,19 @@ const AppContent = () => {
 		showSettings,
 		settingsTargetSection,
 		showHistory,
-		showAccount,
 		showWorktrees,
 		showAnnouncement,
-		onboardingModels,
 		setShowAnnouncement,
 		setShouldShowAnnouncement,
 		closeMcpView,
 		navigateToHistory,
 		hideSettings,
 		hideHistory,
-		hideAccount,
 		hideWorktrees,
 		hideAnnouncement,
 	} = useExtensionState()
 	const [showKanbanModal, setShowKanbanModal] = useState(false)
 	const [hasShownKanbanModal, setHasShownKanbanModal] = useState(false)
-
-	const { clineUser, organizations, activeOrganization } = useClineAuth()
 
 	const showUpdateAnnouncementModal = useCallback(() => {
 		setShowAnnouncement(true)
@@ -100,7 +92,7 @@ const AppContent = () => {
 	}
 
 	if (showWelcome) {
-		return onboardingModels ? <OnboardingView onboardingModels={onboardingModels} /> : <WelcomeView />
+		return <WelcomeView />
 	}
 
 	return (
@@ -109,19 +101,11 @@ const AppContent = () => {
 			{showSettings && <SettingsView onDone={hideSettings} targetSection={settingsTargetSection} />}
 			{showHistory && <HistoryView onDone={hideHistory} />}
 			{showMcp && <McpView initialTab={mcpTab} onDone={closeMcpView} />}
-			{showAccount && (
-				<AccountView
-					activeOrganization={activeOrganization}
-					clineUser={clineUser}
-					onDone={hideAccount}
-					organizations={organizations}
-				/>
-			)}
 			{showWorktrees && <WorktreesView onDone={hideWorktrees} />}
 			{/* Do not conditionally load ChatView, it's expensive and there's state we don't want to lose (user input, disableInput, askResponse promise, etc.) */}
 			<ChatView
 				hideAnnouncement={hideAnnouncement}
-				isHidden={showSettings || showHistory || showMcp || showAccount || showWorktrees}
+				isHidden={showSettings || showHistory || showMcp || showWorktrees}
 				showAnnouncement={showAnnouncement}
 				showHistoryView={navigateToHistory}
 			/>
